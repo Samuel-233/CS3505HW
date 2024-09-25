@@ -1,4 +1,4 @@
-CFLAGS = -Wall
+CFLAGS = -Wall -fsanitize=address,leak
 
 TrieTest : TrieTest.o Trie.o
 	g++ $(CFLAGS) -o TrieTest TrieTest.o Trie.o

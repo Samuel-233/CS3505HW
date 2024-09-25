@@ -12,10 +12,8 @@ words in dictionary, one for checking words that start with this prefix
 It also tested rule of three for Trie class.
 */
 
-std::vector<std::string> readFile()
+std::vector<std::string> readFile(char *fileName)
 {
-    std::string fileName = "";
-    std::cin >> fileName;
 
     std::ifstream file(fileName); // Open File
     if (!file.is_open())
@@ -35,11 +33,15 @@ std::vector<std::string> readFile()
     return lines;
 }
 
-int main()
+int main(int args, char *argv[])
 {
-    /*
-    std::cout << "please input the word dictionary file" << std::endl;
-    std::vector<std::string> lines = readFile();
+    if (args != 3)
+    {
+        std::cout << "Pleas input two command-line arguments, each one a filename.";
+        return 0;
+    }
+
+    std::vector<std::string> lines = readFile(argv[1]);
     if (lines.size() == 0)
     {
         std::cout << "no word added, exiting the program" << std::endl;
@@ -52,8 +54,7 @@ int main()
         tree.addWord(word);
     }
 
-    std::cout << "please input the checking file" << std::endl;
-    lines = readFile();
+    lines = readFile(argv[2]);
     if (lines.size() == 0)
     {
         std::cout << "no word to check, exiting the program" << std::endl;
@@ -68,7 +69,7 @@ int main()
         else
             std::cout << "Word not found";
 
-        std::vector<std::string> wordsFound = tree.allWordStartingWithPrefix(word);
+        std::vector<std::string> wordsFound = tree.allWordsStartingWithPrefix(word);
         if (wordsFound.size() > 0)
         {
             for (std::string &word : wordsFound)
@@ -78,8 +79,8 @@ int main()
         }
         std::cout << std::endl;
     }
-*/
-    // TODO test rule of three
+
+    // test rule of three
     Trie smallTree;
     smallTree.addWord("test");
     smallTree.addWord("table");
@@ -97,11 +98,8 @@ int main()
         std::cout << "didn't copy correctly" << std::endl;
 
     // Test deconstructor
-    Trie *deletedTreePointer = nullptr;
-    {
-        Trie deletedTree = smallTree;
-        deletedTreePointer = &deletedTree;
-    }
-    if (deletedTreePointer->allWords().size() > 0)
-        std::cout << "didn't call delete method" << std::endl;
+    Trie *deletedTree = new Trie();
+    deletedTree->addWord("aaa");
+    deletedTree->addWord("bbb");
+    delete deletedTree;
 }

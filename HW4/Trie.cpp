@@ -44,7 +44,6 @@ Trie::~Trie()
     for (int i = 0; i < 26; i++)
     {
         delete this->nextChar[i];
-        this->nextChar[i] = nullptr;
     }
 }
 
@@ -74,6 +73,7 @@ bool Trie::isWord(std::string word)
     if (word.length() > 0)
     {
         int index = word[0] - 'a';
+        // if (this->nextChar[index] == nullptr)
         if (!this->nextChar[index])
             return false; // If it point to a null Trie, we do not need to check any more
         return this->nextChar[index]->isWord(word.erase(0, 1));
@@ -107,7 +107,7 @@ std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string prefix)
 {
     Trie *endOfPrefix = this; // First get the end of prefix, then find all words under this node
     std::string prefixLeft = prefix;
-    std::vector<std::string> result;
+    std::vector<std::string> result; // This store all word that found
 
     while (prefixLeft.length() > 0)
     {
@@ -117,14 +117,14 @@ std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string prefix)
             return std::vector<std::string>();
         }
         if (!endOfPrefix->nextChar[index])
-            return std::vector<std::string>(); // Same, if pointer is null, there is no word
-        endOfPrefix = endOfPrefix->nextChar[index];
+            return std::vector<std::string>();      // Same, if pointer is null, there is no word
+        endOfPrefix = endOfPrefix->nextChar[index]; // use pointer to avoid copy
         prefixLeft.erase(0, 1);
     }
     if (endOfPrefix->endOfWord)
         result.push_back(prefix);
 
-    std::vector<std::string> words = endOfPrefix->allWords();
+    std::vector<std::string> words = endOfPrefix->allWords(); // This store all words found with this prefix, but those word doesn't contain prefix
     for (std::string &word : words)
     {
         result.push_back(prefix + word);
