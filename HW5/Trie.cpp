@@ -92,7 +92,7 @@ std::vector<std::string> Trie::allWords()
         {
             std::string currentChar = std::string(1, 'a' + i); // find out current node's char
             if (nextChar->endOfWord)
-                result.push_back(currentChar);                       // if current node is also end of word, add it to result
+                result.push_back(currentChar); // if current node is also end of word, add it to result
             std::vector<std::string> wordVec = nextChar->allWords(); // get all chars behind current node
             for (std::string &word : wordVec)
             {
@@ -124,7 +124,8 @@ std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string prefix)
     if (endOfPrefix->endOfWord)
         result.push_back(prefix);
 
-    std::vector<std::string> words = endOfPrefix->allWords(); // This store all words found with this prefix, but those word doesn't contain prefix
+    std::vector<std::string> words =
+        endOfPrefix->allWords(); // This store all words found with this prefix, but those word doesn't contain prefix
     for (std::string &word : words)
     {
         result.push_back(prefix + word);
