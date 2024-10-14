@@ -1,8 +1,8 @@
 #include "Trie.h"
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 /*
 Name: Shu Chen
@@ -14,7 +14,6 @@ It also tested rule of three for Trie class.
 
 std::vector<std::string> readFile(char *fileName)
 {
-
     std::ifstream file(fileName); // Open File
     if (!file.is_open())
     {
